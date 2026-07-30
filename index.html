@@ -43,9 +43,53 @@
 
                 </ul>
 
-                <a href="Downloadable/Devang Resume.pdf" class="btn btn-primary" download>
-                    Download Resume
-                </a>
+                <div class="nav-actions">
+
+                    <a href="Downloadable/Devang Resume.pdf" class="btn btn-outline btn-small" target="_blank" rel="noopener">
+                        View Resume
+                    </a>
+
+                    <a href="Downloadable/Devang Resume.pdf" class="btn btn-primary btn-small" download>
+                        Download Resume
+                    </a>
+
+                </div>
+
+                <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-dropdown">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+            </div>
+
+            <div class="nav-dropdown" id="nav-dropdown">
+
+                <ul>
+
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#process">Process</a></li>
+                    <li><a href="#achievements">Achievements</a></li>
+                    <li><a href="#resume">Resume</a></li>
+                    <li><a href="#contact">Contact</a></li>
+
+                </ul>
+
+                <div class="nav-dropdown-actions">
+
+                    <a href="Downloadable/Devang Resume.pdf" class="btn btn-outline btn-small" target="_blank" rel="noopener">
+                        View Resume
+                    </a>
+
+                    <a href="Downloadable/Devang Resume.pdf" class="btn btn-primary btn-small" download>
+                        Download Resume
+                    </a>
+
+                </div>
 
             </div>
 
@@ -614,9 +658,17 @@
                         <span>Updated July 2026 · PDF, 2 pages</span>
                     </div>
 
-                    <a href="Downloadable/Devang Resume.pdf" class="btn btn-green" download>
-                        Download Resume
-                    </a>
+                    <div class="resume-card-actions">
+
+                        <a href="Downloadable/Devang Resume.pdf" class="btn btn-outline" target="_blank" rel="noopener">
+                            View Resume
+                        </a>
+
+                        <a href="Downloadable/Devang Resume.pdf" class="btn btn-green" download>
+                            Download Resume
+                        </a>
+
+                    </div>
 
                 </div>
 
@@ -713,6 +765,45 @@
     <script>
         var REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+        /* ---------- Mobile nav dropdown ---------- */
+        (function () {
+            var toggle = document.getElementById('nav-toggle');
+            var dropdown = document.getElementById('nav-dropdown');
+            if (!toggle || !dropdown) return;
+
+            function closeMenu() {
+                dropdown.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+            }
+
+            function openMenu() {
+                dropdown.classList.add('open');
+                toggle.setAttribute('aria-expanded', 'true');
+            }
+
+            toggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                var isOpen = dropdown.classList.contains('open');
+                if (isOpen) { closeMenu(); } else { openMenu(); }
+            });
+
+            dropdown.querySelectorAll('a').forEach(function (a) {
+                a.addEventListener('click', closeMenu);
+            });
+
+            document.addEventListener('click', function (e) {
+                if (!dropdown.contains(e.target) && e.target !== toggle) closeMenu();
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeMenu();
+            });
+
+            window.addEventListener('resize', function () {
+                if (window.innerWidth > 760) closeMenu();
+            });
+        })();
+
         /* ---------- Scroll progress bar ---------- */
         (function () {
             var bar = document.getElementById('scroll-progress-bar');
@@ -730,21 +821,23 @@
 
         /* ---------- Scrollspy: highlight active nav link ---------- */
         (function () {
-            var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a'));
+            var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links a, .nav-dropdown ul a'));
             if (!links.length) return;
             var map = {};
             links.forEach(function (a) {
                 var id = a.getAttribute('href').replace('#', '');
                 var section = document.getElementById(id);
-                if (section) map[id] = a;
+                if (!section) return;
+                if (!map[id]) map[id] = [];
+                map[id].push(a);
             });
             var observer = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
-                    var link = map[entry.target.id];
-                    if (!link) return;
+                    var group = map[entry.target.id];
+                    if (!group) return;
                     if (entry.isIntersecting) {
                         links.forEach(function (l) { l.classList.remove('active'); });
-                        link.classList.add('active');
+                        group.forEach(function (l) { l.classList.add('active'); });
                     }
                 });
             }, { rootMargin: '-45% 0px -50% 0px' });
