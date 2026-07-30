@@ -29,10 +29,6 @@
 
             <div class="container">
 
-                <a href="#home" class="logo">
-                    IONIX
-                </a>
-
                 <ul class="nav-links">
 
                     <li><a href="#hero">Home</a></li>
@@ -47,7 +43,7 @@
 
                 </ul>
 
-                <a href="#resume" class="btn btn-primary">
+                <a href="Downloadable/Devang Resume.pdf" class="btn btn-primary" download>
                     Download Resume
                 </a>
 
@@ -132,25 +128,34 @@
 
                         <div class="phone-screen" id="playable-demo">
 
+                            <div class="demo-timer-track">
+                                <div class="demo-timer-fill" id="demo-timer-fill"></div>
+                            </div>
+
                             <span class="demo-label">LIVE PREVIEW</span>
 
                             <div class="demo-score">
                                 SCORE <strong id="demo-score-val">0</strong>
                             </div>
 
+                            <div class="demo-combo" id="demo-combo"></div>
+
                             <div class="demo-stage" id="demo-stage">
                                 <!-- coins injected by JS -->
                             </div>
 
-                            <button class="demo-cta" id="demo-cta">
-                                INSTALL NOW
-                            </button>
+                            <div class="demo-end" id="demo-end">
+                                <span class="demo-end-label">ROUND OVER</span>
+                                <h3 id="demo-end-score">0</h3>
+                                <span class="demo-end-sub">coins collected</span>
+                                <button class="demo-replay" id="demo-replay">REPLAY</button>
+                            </div>
 
                         </div>
 
                     </div>
 
-                    <p class="phone-caption">Tap the coins — this is a real playable, not a screenshot.</p>
+                    <p class="phone-caption">Tap the coins before the timer runs out — this is a real playable, not a screenshot.</p>
 
                 </div>
 
@@ -609,7 +614,7 @@
                         <span>Updated July 2026 · PDF, 2 pages</span>
                     </div>
 
-                    <a href="#" class="btn btn-green">
+                    <a href="Downloadable/Devang Resume.pdf" class="btn btn-green" download>
                         Download Resume
                     </a>
 
@@ -870,19 +875,29 @@
             });
         })();
 
-        /* ---------- Playable demo: coins, confetti, screen shake ---------- */
+        /* ---------- Playable demo: timed coin-catch round ---------- */
         (function () {
             var stage = document.getElementById('demo-stage');
             var scoreVal = document.getElementById('demo-score-val');
-            var cta = document.getElementById('demo-cta');
+            var comboEl = document.getElementById('demo-combo');
+            var timerFill = document.getElementById('demo-timer-fill');
+            var endPanel = document.getElementById('demo-end');
+            var endScore = document.getElementById('demo-end-score');
+            var replayBtn = document.getElementById('demo-replay');
             var screen = document.getElementById('playable-demo');
             if (!stage || !scoreVal) return;
 
-            var score = 0;
-            var COIN_COUNT = 6;
-            var celebrated = false;
-
+            var ROUND_MS = 12000;
+            var COIN_COUNT = 5;
             var confettiColors = ['#A6E04B', '#F9B548', '#7C5CFF', '#FFFFFF'];
+
+            var score = 0;
+            var combo = 0;
+            var lastTapAt = 0;
+            var coins = [];
+            var timerStart = null;
+            var rafId = null;
+            var running = false;
 
             function burstConfetti(x, y) {
                 if (REDUCED_MOTION) return;
@@ -903,9 +918,48 @@
 
             function placeCoin(coin) {
                 var x = 8 + Math.random() * 74;
-                var y = 8 + Math.random() * 60;
+                var y = 8 + Math.random() * 66;
                 coin.style.left = x + '%';
                 coin.style.top = y + '%';
+            }
+
+            function showCombo(text) {
+                if (!comboEl) return;
+                comboEl.textContent = text;
+                comboEl.classList.remove('demo-combo-pop');
+                void comboEl.offsetWidth;
+                comboEl.classList.add('demo-combo-pop');
+            }
+
+            function onCoinTap(coin) {
+                if (!running) return;
+
+                var now = performance.now();
+                combo = (now - lastTapAt < 900) ? combo + 1 : 1;
+                lastTapAt = now;
+
+                var gained = 10 + Math.min(combo - 1, 8) * 5;
+                score += gained;
+                scoreVal.textContent = score;
+
+                if (combo > 1) showCombo('COMBO x' + combo);
+
+                coin.classList.add('demo-coin-pop');
+
+                var r = coin.getBoundingClientRect();
+                var sr = screen.getBoundingClientRect();
+                burstConfetti(r.left - sr.left + r.width / 2, r.top - sr.top + r.height / 2);
+
+                if (screen && !REDUCED_MOTION) {
+                    screen.classList.remove('shake');
+                    void screen.offsetWidth;
+                    screen.classList.add('shake');
+                }
+
+                setTimeout(function () {
+                    placeCoin(coin);
+                    coin.classList.remove('demo-coin-pop');
+                }, 150);
             }
 
             function spawnCoin() {
@@ -913,44 +967,65 @@
                 coin.className = 'demo-coin';
                 coin.textContent = '●';
                 placeCoin(coin);
-                coin.addEventListener('click', function (e) {
-                    score += 10;
-                    scoreVal.textContent = score;
-                    coin.classList.add('demo-coin-pop');
-
-                    var r = coin.getBoundingClientRect();
-                    var sr = screen.getBoundingClientRect();
-                    burstConfetti(r.left - sr.left + r.width / 2, r.top - sr.top + r.height / 2);
-
-                    if (screen && !REDUCED_MOTION) {
-                        screen.classList.remove('shake');
-                        void screen.offsetWidth;
-                        screen.classList.add('shake');
-                    }
-
-                    setTimeout(function () {
-                        placeCoin(coin);
-                        coin.classList.remove('demo-coin-pop');
-                    }, 180);
-
-                    if (score >= 50 && cta && !celebrated) {
-                        celebrated = true;
-                        cta.classList.add('demo-cta-pulse');
-                    }
-                });
+                coin.addEventListener('click', function () { onCoinTap(coin); });
                 stage.appendChild(coin);
+                coins.push(coin);
             }
 
-            for (var i = 0; i < COIN_COUNT; i++) spawnCoin();
+            function tick(ts) {
+                if (!running) return;
+                if (!timerStart) timerStart = ts;
+                var elapsed = ts - timerStart;
+                var pct = Math.max(0, 1 - elapsed / ROUND_MS);
+                if (timerFill) timerFill.style.width = (pct * 100) + '%';
 
-            if (cta) {
-                cta.addEventListener('click', function (e) {
+                if (elapsed >= ROUND_MS) {
+                    endRound();
+                    return;
+                }
+                rafId = requestAnimationFrame(tick);
+            }
+
+            function startRound() {
+                running = true;
+                score = 0;
+                combo = 0;
+                lastTapAt = 0;
+                timerStart = null;
+                scoreVal.textContent = '0';
+                if (comboEl) comboEl.textContent = '';
+                if (endPanel) endPanel.classList.remove('demo-end-show');
+                if (timerFill) timerFill.style.width = '100%';
+
+                coins.forEach(function (c) { c.remove(); });
+                coins = [];
+                for (var i = 0; i < COIN_COUNT; i++) spawnCoin();
+
+                if (REDUCED_MOTION) {
+                    if (timerFill) timerFill.style.width = '0%';
+                    setTimeout(endRound, 50);
+                    return;
+                }
+                rafId = requestAnimationFrame(tick);
+            }
+
+            function endRound() {
+                running = false;
+                if (rafId) cancelAnimationFrame(rafId);
+                coins.forEach(function (c) { c.remove(); });
+                coins = [];
+                if (endScore) endScore.textContent = score;
+                if (endPanel) endPanel.classList.add('demo-end-show');
+            }
+
+            if (replayBtn) {
+                replayBtn.addEventListener('click', function (e) {
                     e.preventDefault();
-                    var r = cta.getBoundingClientRect();
-                    var sr = screen.getBoundingClientRect();
-                    burstConfetti(r.left - sr.left + r.width / 2, r.top - sr.top);
+                    startRound();
                 });
             }
+
+            startRound();
         })();
 
         /* ---------- Hero name letter-in reveal ---------- */
