@@ -279,11 +279,47 @@ section {
 
     padding: 130px 0;
 
+    scroll-margin-top: 100px;
+
 }
 
 #hero {
 
     padding: 70px 0 130px;
+
+}
+
+/* =========================================================== */
+
+.skip-link {
+
+    position: fixed;
+
+    top: -60px;
+
+    left: 20px;
+
+    z-index: 1200;
+
+    background: var(--green);
+
+    color: #223400;
+
+    font-weight: 700;
+
+    padding: 12px 22px;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    transition: top .2s ease;
+
+}
+
+.skip-link:focus {
+
+    top: 20px;
 
 }
 
@@ -304,7 +340,7 @@ h4 {
 
 h1 {
 
-    font-size: 90px;
+    font-size: clamp(44px, 9vw, 90px);
 
     line-height: .88;
 
@@ -319,13 +355,13 @@ h1 {
 
 h2 {
 
-    font-size: 54px;
+    font-size: clamp(32px, 5vw, 54px);
 
 }
 
 h3 {
 
-    font-size: 30px;
+    font-size: clamp(22px, 3vw, 30px);
 
 }
 
@@ -1784,6 +1820,16 @@ a {
 
     border: 1px solid var(--border);
 
+    transition: transform .3s ease, border-color .3s;
+
+}
+
+.process-card:hover {
+
+    transform: translateY(-6px);
+
+    border-color: rgba(166, 224, 75, .35);
+
 }
 
 .process-number {
@@ -1935,6 +1981,46 @@ a {
 /* CONTACT */
 /* =========================================================== */
 
+.contact-direct {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    align-items: center;
+
+    margin: -20px 0 36px;
+
+    font-size: 15px;
+
+}
+
+.contact-direct a {
+
+    color: var(--text2);
+
+    text-decoration: none;
+
+    font-weight: 600;
+
+    transition: color .2s;
+
+}
+
+.contact-direct a:hover {
+
+    color: var(--green);
+
+}
+
+.contact-sep {
+
+    color: var(--muted);
+
+}
+
 .contact-form {
 
     display: grid;
@@ -1947,10 +2033,41 @@ a {
 
 }
 
-.contact-form textarea,
-.contact-form button {
+.field-full,
+.contact-form button,
+.form-status {
 
     grid-column: 1 / -1;
+
+}
+
+.field {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.visually-hidden {
+
+    position: absolute;
+
+    width: 1px;
+
+    height: 1px;
+
+    padding: 0;
+
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+
+    border: 0;
 
 }
 
@@ -1975,6 +2092,8 @@ textarea {
 
     font-size: 15px;
 
+    transition: border-color .2s;
+
 }
 
 textarea {
@@ -1990,9 +2109,52 @@ textarea:focus {
 
 }
 
+.field.field-error input,
+.field.field-error textarea {
+
+    border-color: #FF7A7A;
+
+}
+
 .contact-form button {
 
     justify-self: start;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+.contact-form button[disabled] {
+
+    opacity: .75;
+
+    cursor: default;
+
+    transform: none !important;
+
+}
+
+.form-status {
+
+    font-size: 14px;
+
+    min-height: 20px;
+
+}
+
+.form-status.is-success {
+
+    color: var(--green);
+
+}
+
+.form-status.is-error {
+
+    color: #FF9A9A;
 
 }
 
@@ -2275,12 +2437,6 @@ footer p {
 
     }
 
-    h1 {
-
-        font-size: 68px;
-
-    }
-
 }
 
 @media(max-width:760px) {
@@ -2343,23 +2499,117 @@ footer p {
 
     }
 
-    h1 {
-
-        font-size: 52px;
-
-    }
-
-    h2 {
-
-        font-size: 40px;
-
-    }
-
     .phone-frame {
 
         width: 240px;
 
         height: 480px;
+
+    }
+
+    .navbar {
+
+        height: 72px;
+
+    }
+
+    #hero {
+
+        padding-top: 40px;
+
+    }
+
+    section {
+
+        scroll-margin-top: 76px;
+
+    }
+
+    .hero-metrics {
+
+        flex-wrap: wrap;
+
+        gap: 28px 40px;
+
+        justify-content: center;
+
+    }
+
+    .demo-coin {
+
+        width: 40px;
+
+        height: 40px;
+
+    }
+
+    .ticker-group span {
+
+        font-size: 20px;
+
+    }
+
+    .ticker-group span:nth-child(even) {
+
+        font-size: 15px;
+
+    }
+
+    .nav-dropdown {
+
+        right: 14px;
+
+    }
+
+}
+
+@media(max-width:420px) {
+
+    .container {
+
+        width: 90%;
+
+    }
+
+    section {
+
+        padding: 70px 0;
+
+    }
+
+    .hero-actions {
+
+        flex-direction: column;
+
+        width: 100%;
+
+    }
+
+    .hero-actions .btn {
+
+        width: 100%;
+
+    }
+
+    .phone-frame {
+
+        width: 210px;
+
+        height: 430px;
+
+    }
+
+    .process-card,
+    .achievement-card,
+    .card {
+
+        padding: 26px;
+
+    }
+
+    .demo-end h3 {
+
+        font-size: 44px;
 
     }
 
