@@ -747,6 +747,32 @@ a {
 
 }
 
+.hero-tags {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 22px;
+
+}
+
+.hero-tags-label {
+
+    color: var(--muted);
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    margin-right: 2px;
+
+}
+
 .hero-tag {
 
     display: inline-block;
@@ -765,7 +791,15 @@ a {
 
     letter-spacing: .5px;
 
-    margin-bottom: 22px;
+}
+
+.hero-tag-alt {
+
+    background: rgba(166, 224, 75, .1);
+
+    color: var(--green);
+
+    border: 1px solid rgba(166, 224, 75, .45);
 
 }
 
@@ -1717,6 +1751,317 @@ a {
 }
 
 /* =========================================================== */
+/* UNITY PROJECTS */
+/* =========================================================== */
+
+.unity-grid {
+
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 24px;
+
+}
+
+.unity-card {
+
+    background: linear-gradient(180deg, rgba(61, 50, 119, .95), rgba(42, 34, 89, .95));
+
+    border-radius: 26px;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow);
+
+    transition: transform .25s ease, box-shadow .35s;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+.unity-card:hover {
+
+    box-shadow: var(--shadowLarge);
+
+}
+
+.unity-card-cover {
+
+    height: 180px;
+
+    overflow: hidden;
+
+}
+
+.unity-card-cover img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: transform .4s ease;
+
+}
+
+.unity-card:hover .unity-card-cover img {
+
+    transform: scale(1.06);
+
+}
+
+.unity-card-body {
+
+    padding: 26px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    flex: 1;
+
+}
+
+.unity-card-body h3 {
+
+    margin: 8px 0 10px;
+
+    font-size: 26px;
+
+}
+
+.unity-card-body p {
+
+    font-size: 15px;
+
+    flex: 1;
+
+}
+
+.unity-card-body .project-stats {
+
+    margin-top: 16px;
+
+    margin-bottom: 20px;
+
+}
+
+.unity-more-btn {
+
+    align-self: flex-start;
+
+    background: transparent;
+
+    border: none;
+
+    color: var(--green);
+
+    font-weight: 700;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    transition: transform .2s;
+
+}
+
+.unity-more-btn:hover {
+
+    transform: translateX(4px);
+
+}
+
+/* --- Modal --- */
+
+body.modal-open {
+
+    overflow: hidden;
+
+}
+
+.unity-modal[hidden] {
+
+    display: none;
+
+}
+
+.unity-modal {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1100;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 24px;
+
+}
+
+.unity-modal-backdrop {
+
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(15, 12, 38, .82);
+
+    backdrop-filter: blur(6px);
+
+}
+
+.unity-modal-panel {
+
+    position: relative;
+
+    background: linear-gradient(180deg, #2E2668, #201A4E);
+
+    border: 1px solid var(--border);
+
+    border-radius: 26px;
+
+    max-width: 960px;
+
+    width: 100%;
+
+    max-height: 92vh;
+
+    overflow-y: auto;
+
+    box-shadow: var(--shadowLarge);
+
+    animation: modalIn .25s ease;
+
+}
+
+.unity-modal-panel.panel-portrait {
+
+    max-width: 900px;
+
+}
+
+@keyframes modalIn {
+
+    from { opacity: 0; transform: translateY(16px) scale(.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+
+}
+
+.unity-modal-close {
+
+    position: absolute;
+
+    top: 16px;
+
+    right: 16px;
+
+    z-index: 2;
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 50%;
+
+    border: 1px solid var(--border);
+
+    background: rgba(20, 16, 48, .7);
+
+    color: var(--text);
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: transform .2s, background .2s;
+
+}
+
+.unity-modal-close:hover {
+
+    background: rgba(20, 16, 48, .95);
+
+    transform: rotate(90deg);
+
+}
+
+.unity-modal-gallery {
+
+    display: grid;
+
+    gap: 10px;
+
+    padding: 10px;
+
+}
+
+/* Landscape screenshots (Fugitive, Raft Clone, Rolling Ball) — stack full-width so each frame stays whole and clear */
+
+.unity-modal-gallery.gallery-landscape {
+
+    grid-template-columns: 1fr;
+
+}
+
+/* Portrait screenshots (ForLoop, Match3D) — sit side by side since they're tall and narrow */
+
+.unity-modal-gallery.gallery-portrait {
+
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+
+}
+
+.unity-modal-gallery img {
+
+    width: 100%;
+
+    height: auto;
+
+    object-fit: contain;
+
+    display: block;
+
+    border-radius: 14px;
+
+    background: rgba(0, 0, 0, .15);
+
+}
+
+.unity-modal-body {
+
+    padding: 12px 30px 30px;
+
+}
+
+.unity-modal-body h3 {
+
+    margin: 8px 0 12px;
+
+}
+
+.unity-modal-body .project-stats {
+
+    margin-top: 18px;
+
+}
+
+/* =========================================================== */
 /* EXPERIENCE / TIMELINE */
 /* =========================================================== */
 
@@ -1981,180 +2326,85 @@ a {
 /* CONTACT */
 /* =========================================================== */
 
-.contact-direct {
-
-    display: flex;
-
-    flex-wrap: wrap;
-
-    gap: 10px;
-
-    align-items: center;
-
-    margin: -20px 0 36px;
-
-    font-size: 15px;
-
-}
-
-.contact-direct a {
-
-    color: var(--text2);
-
-    text-decoration: none;
-
-    font-weight: 600;
-
-    transition: color .2s;
-
-}
-
-.contact-direct a:hover {
-
-    color: var(--green);
-
-}
-
-.contact-sep {
-
-    color: var(--muted);
-
-}
-
-.contact-form {
+.contact-cards {
 
     display: grid;
 
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
 
-    gap: 18px;
-
-    max-width: 780px;
+    gap: 24px;
 
 }
 
-.field-full,
-.contact-form button,
-.form-status {
-
-    grid-column: 1 / -1;
-
-}
-
-.field {
+.contact-card {
 
     display: flex;
 
     flex-direction: column;
 
-}
+    text-decoration: none;
 
-.visually-hidden {
-
-    position: absolute;
-
-    width: 1px;
-
-    height: 1px;
-
-    padding: 0;
-
-    margin: -1px;
-
-    overflow: hidden;
-
-    clip: rect(0, 0, 0, 0);
-
-    white-space: nowrap;
-
-    border: 0;
+    color: inherit;
 
 }
 
-input,
-textarea {
+.contact-card-icon {
 
-    width: 100%;
+    width: 56px;
 
-    padding: 16px 18px;
+    height: 56px;
 
-    background: #2C255A;
+    border-radius: 16px;
 
-    border: 1px solid rgba(255, 255, 255, .08);
-
-    border-radius: 14px;
-
-    color: white;
-
-    outline: none;
-
-    font-family: inherit;
-
-    font-size: 15px;
-
-    transition: border-color .2s;
-
-}
-
-textarea {
-
-    resize: vertical;
-
-}
-
-input:focus,
-textarea:focus {
-
-    border-color: var(--primary);
-
-}
-
-.field.field-error input,
-.field.field-error textarea {
-
-    border-color: #FF7A7A;
-
-}
-
-.contact-form button {
-
-    justify-self: start;
-
-    display: inline-flex;
+    display: flex;
 
     align-items: center;
 
-    gap: 10px;
+    justify-content: center;
+
+    font-size: 26px;
+
+    margin-bottom: 20px;
+
+    background: linear-gradient(180deg, #7B61FF, #5E43F0);
+
+    box-shadow: 0 12px 30px rgba(124, 92, 255, .35);
 
 }
 
-.contact-form button[disabled] {
+.contact-card h3 {
 
-    opacity: .75;
-
-    cursor: default;
-
-    transform: none !important;
+    margin-bottom: 8px;
 
 }
 
-.form-status {
+.contact-card p {
 
-    font-size: 14px;
+    font-size: 15px;
 
-    min-height: 20px;
+    word-break: break-word;
 
 }
 
-.form-status.is-success {
+.contact-card-link {
+
+    display: inline-block;
+
+    margin-top: 18px;
 
     color: var(--green);
 
+    font-weight: 700;
+
+    font-size: 14px;
+
+    transition: transform .2s;
+
 }
 
-.form-status.is-error {
+.contact-card:hover .contact-card-link {
 
-    color: #FF9A9A;
+    transform: translateX(4px);
 
 }
 
@@ -2425,7 +2675,9 @@ footer p {
     .about-grid,
     .skills-grid,
     .projects-grid,
-    .achievement-grid {
+    .achievement-grid,
+    .contact-cards,
+    .unity-grid {
 
         grid-template-columns: repeat(2, 1fr);
 
@@ -2471,9 +2723,22 @@ footer p {
     .projects-grid,
     .achievement-grid,
     .process-grid,
-    .contact-form {
+    .contact-cards,
+    .unity-grid {
 
         grid-template-columns: 1fr;
+
+    }
+
+    .unity-modal-gallery.gallery-portrait {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+    .unity-modal {
+
+        padding: 12px;
 
     }
 
