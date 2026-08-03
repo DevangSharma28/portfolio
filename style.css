@@ -1677,6 +1677,20 @@ a {
 
 }
 
+.project-card-more {
+
+    background: linear-gradient(180deg, rgba(166, 224, 75, .12), rgba(42, 34, 89, .95));
+
+    border: 1px solid rgba(166, 224, 75, .35);
+
+}
+
+.project-card-more h3 {
+
+    color: var(--green);
+
+}
+
 .project-thumb {
 
     height: 160px;
