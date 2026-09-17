@@ -208,6 +208,19 @@ main, header, footer {
 
 }
 
+/* Sticky on header (not .navbar): a sticky child can't outlive its header-sized parent,
+   and header must stack above main so the mobile dropdown isn't covered. */
+
+header#home {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 999;
+
+}
+
 /* =========================================================== */
 /* SCROLL PROGRESS BAR */
 /* =========================================================== */
@@ -387,9 +400,7 @@ a {
 
 .navbar {
 
-    position: sticky;
-
-    top: 0;
+    position: relative;
 
     height: 90px;
 
@@ -549,6 +560,8 @@ a {
 
     padding: 0;
 
+    margin-left: auto;
+
 }
 
 .nav-toggle span {
@@ -601,7 +614,7 @@ a {
 
     width: min(300px, 88vw);
 
-    background: rgba(27, 22, 66, .97);
+    background: #1B1642;
 
     backdrop-filter: blur(20px);
 
@@ -615,11 +628,13 @@ a {
 
     opacity: 0;
 
+    visibility: hidden;
+
     transform: translateY(-12px);
 
     pointer-events: none;
 
-    transition: opacity .25s ease, transform .25s ease;
+    transition: opacity .25s ease, transform .25s ease, visibility .25s;
 
     z-index: 998;
 
@@ -628,6 +643,8 @@ a {
 .nav-dropdown.open {
 
     opacity: 1;
+
+    visibility: visible;
 
     transform: translateY(8px);
 
@@ -1742,7 +1759,9 @@ a {
 
     display: flex;
 
-    gap: 12px;
+    flex-wrap: wrap;
+
+    gap: 10px;
 
     margin-top: 18px;
 
@@ -2643,19 +2662,30 @@ footer p {
 /* RESPONSIVE */
 /* =========================================================== */
 
-@media(max-width:1100px) {
+@media(max-width:1200px) {
 
-    .nav-links {
-
-        gap: 20px;
-
-    }
-
-    .nav-actions .btn-outline {
+    .nav-links,
+    .nav-actions {
 
         display: none;
 
     }
+
+    .nav-toggle {
+
+        display: flex;
+
+    }
+
+    .nav-dropdown {
+
+        display: block;
+
+    }
+
+}
+
+@media(max-width:1100px) {
 
     .hero-inner {
 
@@ -2716,19 +2746,6 @@ footer p {
     .navbar .container {
 
         padding: 0 4px;
-
-    }
-
-    .nav-links,
-    .nav-actions {
-
-        display: none;
-
-    }
-
-    .nav-toggle {
-
-        display: flex;
 
     }
 
