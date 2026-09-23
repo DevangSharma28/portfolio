@@ -1,9 +1,7 @@
 /* ===========================================================
-   IONIX — Playable Ads Developer Portfolio
+   Devang Sharma — Portfolio
    Design System
 =========================================================== */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Teko:wght@400;500;600;700&display=swap');
 
 :root {
 
@@ -265,15 +263,26 @@ header#home {
 
     transform: translateY(34px);
 
-    transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1);
-
 }
+
+/* Two classes so this outranks each card's own single-class `transition`.
+   JS removes both classes once the reveal finishes, handing hover effects back to the card. */
 
 .reveal.in-view {
 
     opacity: 1;
 
     transform: none;
+
+    transition: opacity .7s cubic-bezier(.2, .7, .2, 1), transform .7s cubic-bezier(.2, .7, .2, 1);
+
+    transition-delay: var(--reveal-delay, 0ms);
+
+}
+
+main:focus {
+
+    outline: none;
 
 }
 
@@ -423,22 +432,6 @@ a {
     align-items: center;
 
     justify-content: space-between;
-
-}
-
-.logo {
-
-    font-size: 38px;
-
-    font-family: "Teko";
-
-    letter-spacing: 2px;
-
-    font-weight: 700;
-
-    text-decoration: none;
-
-    color: var(--text);
 
 }
 
@@ -743,6 +736,14 @@ a {
 
 }
 
+.hero-word {
+
+    display: inline-block;
+
+    white-space: nowrap;
+
+}
+
 .hero-name .letter-in {
 
     display: inline-block;
@@ -880,7 +881,15 @@ a {
 
 }
 
-.hero-metric h3 {
+.hero-metric-num {
+
+    font-family: "Teko", sans-serif;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    line-height: normal;
 
     font-size: 40px;
 
@@ -1146,6 +1155,24 @@ a {
 
     animation: coinBob 2.4s ease-in-out infinite;
 
+    border: none;
+
+    padding: 0;
+
+    font-family: inherit;
+
+    line-height: 1;
+
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+.demo-coin:focus-visible {
+
+    outline: 2px solid var(--green);
+
+    outline-offset: 4px;
+
 }
 
 .demo-coin::after {
@@ -1232,11 +1259,13 @@ a {
 
     opacity: 0;
 
+    visibility: hidden;
+
     pointer-events: none;
 
     transform: scale(.96);
 
-    transition: opacity .3s ease, transform .3s ease;
+    transition: opacity .3s ease, transform .3s ease, visibility .3s;
 
     z-index: 6;
 
@@ -1245,6 +1274,8 @@ a {
 .demo-end-show {
 
     opacity: 1;
+
+    visibility: visible;
 
     pointer-events: auto;
 
@@ -1264,7 +1295,15 @@ a {
 
 }
 
-.demo-end h3 {
+.demo-end-num {
+
+    font-family: "Teko", sans-serif;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    line-height: normal;
 
     font-size: 56px;
 
@@ -1526,8 +1565,6 @@ a {
 
     box-shadow: var(--shadow);
 
-    backdrop-filter: blur(12px);
-
     transition: .35s;
 
 }
@@ -1707,19 +1744,6 @@ a {
     color: var(--green);
 
 }
-
-.project-thumb {
-
-    height: 160px;
-
-}
-
-.project-thumb-1 { background: linear-gradient(135deg, #F9B548, #7C5CFF); }
-.project-thumb-2 { background: linear-gradient(135deg, #A6E04B, #2A2358); }
-.project-thumb-3 { background: linear-gradient(135deg, #5E43F0, #F9B548); }
-.project-thumb-4 { background: linear-gradient(135deg, #7C5CFF, #A6E04B); }
-.project-thumb-5 { background: linear-gradient(135deg, #F9B548, #2A2358); }
-.project-thumb-6 { background: linear-gradient(135deg, #2A2358, #7C5CFF); }
 
 .project-body {
 
@@ -2578,14 +2602,6 @@ body.modal-open {
 
 }
 
-.btn-purple {
-
-    background: linear-gradient(180deg, #8062FF, #6145F1);
-
-    color: white;
-
-}
-
 .btn-green {
 
     background: linear-gradient(180deg, #A8E45C, #84C92D);
@@ -2903,7 +2919,7 @@ footer p {
 
     }
 
-    .demo-end h3 {
+    .demo-end-num {
 
         font-size: 44px;
 
