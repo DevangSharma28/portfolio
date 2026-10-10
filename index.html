@@ -154,7 +154,7 @@
                     <div class="hero-tags">
 
                         <span class="hero-tags-label">Available for</span>
-                        <span class="hero-tag">Freelance</span>
+                        <span class="hero-tag hero-tag-alt">Freelance</span>
                         <span class="hero-tag hero-tag-alt">Full-time</span>
                         <span class="hero-tag hero-tag-alt">Remote</span>
                         <span class="hero-tag hero-tag-alt">Hybrid</span>
@@ -170,7 +170,7 @@
                     </h2>
 
                     <p class="hero-stack">
-                        Unity • C# • TypeScript • Three.js • Cocos Creator • AI-Assisted Dev
+                        Unity • C# • AI-Assisted Dev • TypeScript • Three.js • Cocos Creator  
                     </p>
 
                     <p>
@@ -205,7 +205,7 @@
                         </div>
 
                         <div class="hero-metric">
-                            <p class="hero-metric-num" data-count="6" data-prefix="" data-suffix="">0</p>
+                            <p class="hero-metric-num" data-count="10" data-prefix="" data-suffix="+">0+</p>
                             <span>Unity games built</span>
                         </div>
 
@@ -553,6 +553,25 @@
                 </header>
 
                 <div class="unity-grid">
+
+                    <article class="unity-card" data-project="scrapyard">
+                        <div class="unity-card-cover">
+                            <img src="UnityProjects/ScrapyardKing/01_cutting_heavy_scrap.png"
+                                alt="Scrap Yard King gameplay screenshot" loading="lazy">
+                        </div>
+                        <div class="unity-card-body">
+                            <span class="project-tag">Unity · Action Idle Tycoon</span>
+                            <h3>Scrap Yard King</h3>
+                            <p>Cut scrap with a chainsaw, haul it on your back, feed the machines. A mobile action-idle
+                                tycoon where junk becomes metal bars for truck orders.</p>
+                            <div class="project-stats">
+                                <span>Production Chain</span>
+                                <span>Data-Driven</span>
+                                <span>Simulated Balancing</span>
+                            </div>
+                            <button class="unity-more-btn" type="button">Know More →</button>
+                        </div>
+                    </article>
 
                     <article class="unity-card" data-project="bakery">
                         <div class="unity-card-cover">
@@ -1113,6 +1132,14 @@
             if (!modal) return;
 
             var DATA = {
+                scrapyard: {
+                    tag: 'Unity · Action Idle Tycoon',
+                    title: 'Scrap Yard King',
+                    orientation: 'portrait',
+                    desc: 'A mobile action and idle tycoon game built in Unity 6. You cut scrap with a chainsaw, carry the pieces on your back and feed a chain of machines (Crusher, Metal Splitter, four Furnaces, Press) that turns junk into metal bars for truck orders, with every item a physical object that is carried, conveyed and stacked. As the yard grows, hired workers, cranes, operators and offline income take over the hauling while you expand into new areas. Upgrades, hires and new areas are bought by standing on tiles in the yard, not through menus. Machines, items, upgrades, tasks and prices are all ScriptableObject data, so new content needs no new code. Missions, daily rewards, timed boosts, rewarded-video offers, a shop and a premium currency sit behind stand-in ad and store services until real SDKs are connected. The economy is balanced by simulation: automated tests play four simulated players for 30 days to catch drift. Built for Android (URP, IL2CPP, ARM64) in portrait with a one-thumb joystick and a save system, with chunky toy-style 3D models generated in-engine and a hand-painted UI kit.',
+                    tags: ['Unity 6 · URP', 'Production Chain', 'Physical Item Stacking', 'Workers & Cranes', 'Offline Income', 'In-World Buying', 'ScriptableObject Data', 'Missions & Daily Rewards', 'Rewarded Ads & Shop', 'Simulated Economy Tests', 'Save System', 'Android · IL2CPP'],
+                    images: ['UnityProjects/ScrapyardKing/01_cutting_heavy_scrap.png', 'UnityProjects/ScrapyardKing/02_crusher_and_workers.png', 'UnityProjects/ScrapyardKing/03_metal_splitter.png', 'UnityProjects/ScrapyardKing/04_upgrade_panel.png']
+                },
                 bakery: {
                     tag: 'Unity · Idle Tycoon',
                     title: 'Idle Bakery Cafe',
